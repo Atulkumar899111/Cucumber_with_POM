@@ -5,7 +5,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 //import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -52,7 +54,9 @@ public class stepDefi {
     @Then("click on Place Order button")
     public void click_on_place_order_button() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.presenceOfElementLocated (By.xpath("//h5[@id='orderModalLabel']")));
+        WebElement element = driver.findElement((By.xpath("//h5[@id='orderModalLabel']")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h5[@id='orderModalLabel']")));
         utils.getElementByXpath(driver,"//input[@id='name']").sendKeys("Atul");
         utils.getElementByXpath(driver,"//input[@id='country']").sendKeys("xyz");
         utils.getElementByXpath(driver,"//input[@id='city']").sendKeys("xyz");
