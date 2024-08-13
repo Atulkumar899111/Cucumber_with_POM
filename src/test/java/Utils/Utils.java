@@ -12,8 +12,13 @@ import java.time.Duration;
 public class Utils {
 
     public boolean isDisplayed(WebDriver driver, String xpath){
-        boolean value = driver.findElement(By.xpath(xpath)).isDisplayed();
-        return value;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated (By.xpath(xpath)));
+        if (driver.findElement(By.xpath(xpath)).isDisplayed()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public WebElement getElementByXpath(WebDriver driver, String xpath){
@@ -21,10 +26,11 @@ public class Utils {
         wait.until(ExpectedConditions.presenceOfElementLocated (By.xpath(xpath)));
         return driver.findElement(By.xpath(xpath));
     }
-    public WebDriver getUrl(WebDriver driver){
+
+    public WebDriver getUrl(WebDriver driver, String Url){
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://www.demoblaze.com/index.html");
+        driver.get(Url);
         return driver;
     }
 }
